@@ -1,0 +1,61 @@
+<div class="card w-50 mx-auto mt-5">
+  <div class="card-body">
+    <h3 class="card-title">
+      Create a Game
+    </h3>
+    <form method="post" action="/games/new">
+      <legend></legend>
+      <div class="mb-3">
+        <label for="name" class="form-label">
+          Name
+        </label>
+        <input
+          class="form-control"
+          id="name"
+          name="name"
+          type="text"
+          value=""
+          autofocus
+        />
+      </div>
+      <div class="mb-3">
+        <label for="description" class="form-label">
+          Description
+        </label>
+        <textarea
+          class="form-control"
+          id="description"
+          name="description"
+          rows="4"
+        ></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="starts_at" class="form-label">
+          Starts at
+        </label>
+        <input
+          class="form-control"
+          id="starts_at"
+          name="starts_at"
+          type="datetime-local"
+          value=""
+        />
+      </div>
+      <div class="mb-3">
+        <label for="ends_at" class="form-label">
+          Ends at
+        </label>
+        <input
+          class="form-control"
+          id="ends_at"
+          name="ends_at"
+          type="datetime-local"
+          value=""
+        />
+      </div>
+      <button type="submit" class="btn btn-primary">
+        Submit
+      </button>
+    </form>
+  </div>
+</div>

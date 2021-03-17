@@ -1,1 +1,23 @@
-<h1>Hello World</h1>
+{{#if games}}
+  <div class="row">
+    {{#each games}}
+      <div class="col-sm-6">
+        <a  href="/games/{{this.id}}" class="card shadow mt-3" style="text-decoration: none;">
+          <div class="card-body">
+            <h3 class="card-title">
+              {{this.description}}
+            </h3>
+          </div>
+        </a>
+      </div>
+    {{/each}}
+  </div>
+{{else}}
+  <h1>
+    No Games Found...
+  </h1>
+{{/if}}
+<a href="/games/new" class="btn btn-primary">
+  {{fontawesome-icon icon="plus"}}
+  Create a Game
+</a>
