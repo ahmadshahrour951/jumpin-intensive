@@ -1,0 +1,69 @@
+<div class="card w-50 mx-auto mt-5">
+  <div class="card-body">
+    <h3 class="card-title">
+      Game Detail
+    </h3>
+    <form method="post" action="/{{game.id}}">
+      <input type="hidden" name="method" value="PUT" />
+      <div class="mb-3">
+        <label for="name" class="form-label">
+          Name
+        </label>
+        <input
+          class="form-control"
+          id="name"
+          name="name"
+          type="text"
+          value="{{game.name}}"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="description" class="form-label">
+          Description
+        </label>
+        <textarea
+          class="form-control"
+          id="description"
+          name="description"
+          rows="4"
+        >{{game.description}}
+        </textarea>
+      </div>
+      <div class="mb-3">
+        <label for="starts_at" class="form-label">
+          Starts at
+        </label>
+        <input
+          class="form-control"
+          id="starts_at"
+          name="starts_at"
+          type="datetime-local"
+          value="{{game.starts_at}}"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="ends_at" class="form-label">
+          Ends at
+        </label>
+        <input
+          class="form-control"
+          id="ends_at"
+          name="ends_at"
+          type="datetime-local"
+          value="{{game.ends_at}}"
+        />
+      </div>
+      <button
+        id="delete-game"
+        value="{{game.id}}"
+        type="button"
+        class="btn btn-danger"
+      >
+        Delete
+      </button>
+      <button type="submit" class="btn btn-primary">
+        Update
+      </button>
+    </form>
+  </div>
+</div>

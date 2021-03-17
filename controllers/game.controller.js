@@ -3,6 +3,7 @@ const db = require('../models');
 const gameController = {
   createGame,
   findGames,
+  findGame,
 };
 
 function createGame(req, res, next) {
@@ -25,4 +26,15 @@ function findGames(req, res, next) {
       return res.render('home', { games });
     })
     .catch((err) => console.log(err));
+}
+
+function findGame(req, res, next) {
+  db.games.findByPk(req.params.gameId, { raw: true }).then((game) => {
+    game.starts_at = moment(game.starts_at).format('YYYY-MM-DDThh:mm');
+    game.ends_at = moment(game.ends_at).format('YYYY-MM-DDThh:mm');
+
+    console.log(game);
+
+    return res.render('game-detail', { game });
+  });
 }
