@@ -4,6 +4,7 @@ const gameController = {
   createGame,
   findGames,
   findGame,
+  updateGame,
 };
 
 function createGame(req, res, next) {
@@ -38,3 +39,17 @@ function findGame(req, res, next) {
     return res.render('game-detail', { game });
   });
 }
+
+function updateGame(req, res, next) {
+  db.games
+    .findByPk(req.params.gameId)
+    .then((game) => {
+      return game.update(req.body);
+    })
+    .then(() => {
+      return res.redirect(`/games/${req.params.gameId}`);
+    });
+}
+
+
+module.exports = gameController;
