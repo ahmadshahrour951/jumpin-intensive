@@ -1,18 +1,14 @@
 if (process.env.NODE_ENV !== 'production') require('dotenv-safe').config();
 const express = require('express');
 const exphbs = require('express-handlebars');
-
+const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 
 const db = require('./models');
 const routes = require('./routes');
 
 const Handlebars = require('handlebars');
-const {
-  library,
-  dom,
-  icon,
-} = require('@fortawesome/fontawesome-svg-core')
+const { library, dom, icon } = require('@fortawesome/fontawesome-svg-core');
 const fas = require('@fortawesome/free-solid-svg-icons').fas;
 const fab = require('@fortawesome/free-brands-svg-icons').fab;
 
@@ -28,14 +24,6 @@ Handlebars.registerHelper('fontawesome-icon', function (args) {
   );
 });
 
-// Handlebars.registerHelper('fontawesome-icon', function (args) {
-//   return new Handlebars.SafeString(
-//     icon({ prefix: 'fab', iconName: args.hash.icon }).html
-//   );
-// });
-
-
-
 const app = express();
 
 app.engine(
@@ -47,6 +35,7 @@ app.engine(
 );
 app.set('view engine', 'hbs');
 
+app.use(cookieParser());
 app.use(express.static('public'));
 app.use(morgan('combined'));
 app.use(express.json());
