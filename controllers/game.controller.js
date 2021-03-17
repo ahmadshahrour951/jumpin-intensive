@@ -5,6 +5,7 @@ const gameController = {
   findGames,
   findGame,
   updateGame,
+  deleteGame,
 };
 
 function createGame(req, res, next) {
@@ -51,5 +52,20 @@ function updateGame(req, res, next) {
     });
 }
 
+function deleteGame(req, res, next) {
+  db.games
+    .findByPk(req.params.gameId)
+    .then((game) => {
+      return game.destroy();
+    })
+    .then(() => {
+      return res
+        .status(200)
+        .json({ data:{
+          redirect: true,
+          redirect_url: '/games'
+        } });
+    });
+}
 
 module.exports = gameController;
