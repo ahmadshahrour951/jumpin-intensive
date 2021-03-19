@@ -29,7 +29,7 @@ function findGames(req, res, next) {
   db.games
     .findAll({ raw: true })
     .then((games) => {
-      return res.render('home', { games });
+      return res.render('games-index', { games });
     })
     .catch((err) => console.log(err));
 }
