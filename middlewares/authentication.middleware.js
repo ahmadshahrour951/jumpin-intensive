@@ -11,7 +11,7 @@ const authenticate = (req, res, next) => {
   } else {
     const token = req.cookies.nToken;
     const decodedToken = jwt.decode(token, { complete: true }) || {};
-    req.userId = decodedToken.payload;
+    req.userId = decodedToken.payload.userId;
   }
   next();
 };
