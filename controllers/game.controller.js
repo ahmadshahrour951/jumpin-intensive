@@ -6,6 +6,8 @@ const gameController = {
   findGame,
   updateGame,
   deleteGame,
+  joinSelfGame,
+  removeSelfGame,
 };
 
 function createGame(req, res, next) {
@@ -67,6 +69,42 @@ function deleteGame(req, res, next) {
         },
       });
     });
+}
+
+function joinSelfGame(req, res, next) {
+  let currentUser;
+
+  db.users
+    .findByPk(req.userId)
+    .then((user) => {
+      currentUser = user;
+      return db.games.findByPk(req.params.gameId);
+    })
+    .then((game) => {
+      return game.addUser(currentUser);
+    })
+    .then(() => {
+      return res.redirect('/games');
+    })
+    .catch((err) => console.log(err));
+}
+
+function removeSelfGame(req, res, next) {
+  let currentUser;
+
+  db.users
+    .findByPk(req.userId)
+    .then((user) => {
+      currentUser = user;
+      return db.games.findByPk(req.params.gameId);
+    })
+    .then((game) => {
+      return game.removeUser(currentUser);
+    })
+    .then(() => {
+      return res.redirect('/games')
+    })
+    .catch((err) => console.log(err));
 }
 
 module.exports = gameController;
