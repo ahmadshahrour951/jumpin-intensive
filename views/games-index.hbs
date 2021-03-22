@@ -1,23 +1,42 @@
 {{#if games}}
   <div class="row">
     {{#each games}}
-      <div class="col-sm-6">
-        <a  href="/games/{{this.id}}" class="card shadow mt-3" style="text-decoration: none;">
+      <div class="col-4">
+        <a
+          href="/games/{{this.id}}"
+          class="card shadow mt-3"
+          style="text-decoration: none; color: #484848"
+        >
           <div class="card-body">
-            <h3 class="card-title">
-              {{this.description}}
+            <h3 class="card-title d-flex justify-content-between">
+              <span>
+                {{this.name}}
+              </span>
+              <span>
+                {{fontawesome-icon icon="futbol"}}
+              </span>
             </h3>
+            <h5 class="card-subtitle">
+              @{{this.user.username}}
+            </h5>
+          </div>
+          <div class="card-footer">
+            {{this.startsAt}}
           </div>
         </a>
       </div>
     {{/each}}
   </div>
 {{else}}
-  <h1>
+  <h1 class="text-center mt-5">
     No Games Found...
   </h1>
 {{/if}}
-<a href="/games/new" class="btn btn-primary">
+<a
+  href="/games/new"
+  class="btn btn-primary mr-5 mb-5"
+  style="position: fixed; bottom: 0px; right: 90.5px;"
+>
   {{fontawesome-icon icon="plus"}}
-  Create a Game
+  Create Game
 </a>

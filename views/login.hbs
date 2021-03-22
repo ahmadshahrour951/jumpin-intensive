@@ -1,43 +1,37 @@
-<div class="row">
-  <div class="col-sm-4 col-sm-offset-4">
-    <form action="login" method="post">
-      <legend>
+<div class="row mt-5">
+  <div class="card shadow col-sm-4 col-sm-offset-4 mx-auto">
+    <div class="card-body">
+      <h1 class="card-title">
         Login
-      </legend>
-      <div class="form-group">
-        <label for="username">
-          Username
-        </label>
-        <input
-          type="text"
-          name="username"
-          class="form-control"
-          id="username"
-          placeholder="Username"
-        />
-        <label for="password">
-          Password
-        </label>
-        <input
-          type="password"
-          name="password"
-          class="form-control"
-          id="password"
-          placeholder="Password"
-        />
-      </div>
-      <div class="row">
-        <div class="col-6">
-          <a href="forgot_password">
-            forgot your password?
-          </a>
+      </h1>
+      <hr>
+      <form action="login" method="post">
+        <div class="form-group">
+          <label for="username">
+            Username
+          </label>
+          <input
+            type="text"
+            name="username"
+            class="form-control mb-2"
+            id="username"
+            placeholder="Username"
+          />
+          <label for="password">
+            Password
+          </label>
+          <input
+            type="password"
+            name="password"
+            class="form-control mb-2"
+            id="password"
+            placeholder="Password"
+          />
         </div>
-        <div class="col-6 text-right">
-          <button type="submit" class="btn btn-primary">
-            Login
-          </button>
-        </div>
-      </div>
-    </form>
+        <button type="submit" class="btn btn-primary">
+          Login
+        </button>
+      </form>
+    </div>
   </div>
 </div>

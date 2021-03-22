@@ -4,9 +4,21 @@
       Jumpin
     </a>
     <div class="navbar-right">
-      <a href="auth/logout" class="btn btn-primary">
+      {{#if this.user}}
+        <a href="/users/{{this.user.username}}/edit" class="btn btn-primary">
+          Profile
+        </a>
+        <a href="/auth/logout" class="btn btn-primary">
           Logout
-      </a>
+        </a>
+      {{else}}
+        <a href="/auth/login" class="btn btn-primary">
+          Login
+        </a>
+        <a href="/auth/signup" class="btn btn-primary">
+          Signup
+        </a>
+      {{/if}}
     </div>
   </div>
 </nav>

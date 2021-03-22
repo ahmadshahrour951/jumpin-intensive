@@ -10,10 +10,25 @@ const authenticate = (req, res, next) => {
     next(error)
   } else {
     const token = req.cookies.nToken;
-    const decodedToken = jwt.decode(token, { complete: true }) || {};
-    req.userId = decodedToken.payload.userId;
+    let decodedToken;
+
+    try {
+      decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+    } catch(err) {
+      err.statusCode = 500;
+      throw err;
+    }
+
+    if (!decodedToken) {
+      const error = new Error('Not authenticated.');
+      error.statusCode = 401;
+      throw error;
+    }
+
+    req.userId = decodedToken.userId;
+    req.username = decodedToken.username;
+    next();
   }
-  next();
 };
 
 module.exports = authenticate;

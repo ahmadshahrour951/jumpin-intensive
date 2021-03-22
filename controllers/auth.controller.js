@@ -41,6 +41,7 @@ function signup(req, res, next) {
       const token = jwt.sign(
         {
           userId: savedUser.id,
+          username: savedUser.username
         },
         process.env.JWT_SECRET,
         { expiresIn: '1h' }
@@ -86,6 +87,7 @@ function login(req, res, next) {
       const token = jwt.sign(
         {
           userId: oldUser.id,
+          username: oldUser.username
         },
         process.env.JWT_SECRET,
         { expiresIn: '1h' }
@@ -105,7 +107,7 @@ function login(req, res, next) {
 
 function logout(req, res, next) {
   res.clearCookie('nToken');
-  return res.redirect('/');
+  return res.redirect('/auth/login');
 }
 
 module.exports = authController;
