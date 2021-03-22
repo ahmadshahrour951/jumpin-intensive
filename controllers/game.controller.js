@@ -1,6 +1,10 @@
+const { body } = require('express-validator')
 const moment = require('moment');
+
 const db = require('../models');
+
 const gameController = {
+  validate,
   createGame,
   findGames,
   findGame,
@@ -9,6 +13,25 @@ const gameController = {
   joinSelfGame,
   removeSelfGame,
 };
+
+function validate(method) {
+  switch (method) {
+    case 'createGame':
+      return [
+        body('name').exists().notEmpty().isString().trim(),
+        body('description').optional().isString().trim(),
+        body('startsAt').exists().notEmpty().isDate(),
+        body('endsAt').exists().notEmpty().isDate()
+      ];
+    case 'updateGame':
+      return [
+        body('name').optional().isString().trim(),
+        body('description').optional().isString().trim(),
+        body('startsAt').optional().isDate(),
+        body('endsAt').optional().isDate(),
+      ];
+  }
+}
 
 function createGame(req, res, next) {
   if (req.method === 'GET') {
@@ -19,7 +42,9 @@ function createGame(req, res, next) {
           user: JSON.parse(JSON.stringify(user)),
         });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        next(err)
+      });
   }
 
   let newGame = req.body;
@@ -38,7 +63,9 @@ function createGame(req, res, next) {
       return game.addUser(gameOwner);
     })
     .then(() => res.redirect('/games'))
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      next(err)
+    });
 }
 
 function findGames(req, res, next) {
@@ -69,7 +96,9 @@ function findGames(req, res, next) {
         user: userJson,
       });
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      next(err)
+    });
 }
 
 function findGame(req, res, next) {
@@ -110,7 +139,9 @@ function findGame(req, res, next) {
         isCreator,
       });
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      next(err)
+    });
 }
 
 function updateGame(req, res, next) {
@@ -135,7 +166,9 @@ function updateGame(req, res, next) {
           user: currentUser,
         });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        next(err)
+      });
   }
 
   return db.games
@@ -145,7 +178,10 @@ function updateGame(req, res, next) {
     })
     .then(() => {
       return res.redirect(`/games/${req.params.gameId}`);
-    });
+    })
+    .catch(err => {
+      next(err)
+    })
 }
 
 function deleteGame(req, res, next) {
@@ -161,7 +197,10 @@ function deleteGame(req, res, next) {
           redirect_url: '/games',
         },
       });
-    });
+    })
+    .catch(err => {
+      next(err)
+    })
 }
 
 function joinSelfGame(req, res, next) {
@@ -179,7 +218,9 @@ function joinSelfGame(req, res, next) {
     .then(() => {
       return res.redirect(`/games/${req.params.gameId}`);
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      next(err)
+    });
 }
 
 function removeSelfGame(req, res, next) {
@@ -197,7 +238,9 @@ function removeSelfGame(req, res, next) {
     .then(() => {
       return res.redirect(`/games/${req.params.gameId}`);
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      next(err)
+    });
 }
 
 module.exports = gameController;

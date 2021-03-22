@@ -1,18 +1,63 @@
+const { body, validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
 const db = require('../models');
 
 const authController = {
+  validate,
   signup,
   login,
   logout,
 };
 
+function validate(method) {
+  switch (method) {
+    case 'signup':
+      return [
+        body('email').notEmpty().isString().isEmail(),
+        body('username')
+          .notEmpty()
+          .isString()
+          .trim()
+          .isLength({ min: 3, max: 20 }),
+        body('password')
+          .notEmpty()
+          .isString()
+          .trim()
+          .isLength({ min: 3, max: 50 }),
+      ];
+    case 'login':
+      return [
+        body('username')
+          .notEmpty()
+          .isString()
+          .trim()
+          .isLength({ min: 3, max: 20 }),
+        body('password')
+          .notEmpty()
+          .isString()
+          .trim()
+          .isLength({ min: 3, max: 50 }),
+      ];
+  }
+}
+
 function signup(req, res, next) {
   if (req.method === 'GET') return res.render('signup');
 
-  let newUser = req.body;
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.render('signup', { errors: errors.array() });
+  }
+
+
+  let newUser = {
+    email: req.body.email,
+    username: req.body.username,
+    password: req.body.password
+  };
 
   db.users
     .findOne({ where: { email: newUser.email } })
@@ -20,7 +65,6 @@ function signup(req, res, next) {
       if (userEmail) {
         const error = new Error('User with that email already exists.');
         next(error);
-        throw error;
       }
 
       return db.users.findOne({ where: { username: newUser.username } });
@@ -29,7 +73,6 @@ function signup(req, res, next) {
       if (userUsername) {
         const error = new Error('User with that username already exists.');
         next(error);
-        throw error;
       }
       return bcrypt.hash(newUser.password, 12);
     })
@@ -41,7 +84,7 @@ function signup(req, res, next) {
       const token = jwt.sign(
         {
           userId: savedUser.id,
-          username: savedUser.username
+          username: savedUser.username,
         },
         process.env.JWT_SECRET,
         { expiresIn: '1h' }
@@ -55,12 +98,18 @@ function signup(req, res, next) {
       res.redirect('/games');
     })
     .catch((err) => {
-      console.log(err);
+      next(err);
     });
 }
 
 function login(req, res, next) {
   if (req.method === 'GET') return res.render('login');
+
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.render('login', { errors: errors.array() });
+    }
 
   let oldUser = req.body;
   let password = req.body.password;
@@ -71,7 +120,7 @@ function login(req, res, next) {
       if (!userUsername) {
         const error = new Error('No user with that username.');
         error.statusCode = 401;
-        throw error;
+        next(error);
       }
 
       oldUser = userUsername;
@@ -81,13 +130,13 @@ function login(req, res, next) {
       if (!isEqual) {
         const error = new Error('Wrong password.');
         error.statusCode = 401;
-        throw error;
+        next(error);
       }
 
       const token = jwt.sign(
         {
           userId: oldUser.id,
-          username: oldUser.username
+          username: oldUser.username,
         },
         process.env.JWT_SECRET,
         { expiresIn: '1h' }
@@ -101,7 +150,7 @@ function login(req, res, next) {
       return res.redirect('/games');
     })
     .catch((err) => {
-      console.log(err);
+      next(err);
     });
 }
 

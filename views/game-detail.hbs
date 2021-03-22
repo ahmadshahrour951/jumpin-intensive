@@ -13,49 +13,49 @@
     </h2>
     <hr />
     <div class="row">
-      <div class="col-3">
-        <h3 class="fs-4">
+      <div class="col-4">
+        <h3 class="fs-6 fw-bold">
           Created by:
         </h3>
       </div>
       <div class="col">
-        <p class="fs-5">
+        <p class="fs-6">
           @{{this.game.user.username}}
         </p>
       </div>
     </div>
     <div class="row">
-      <div class="col-3">
-        <h3 class="fs-4">
+      <div class="col-4">
+        <h3 class="fs-6 fw-bold">
           Starts at:
         </h3>
       </div>
       <div class="col">
-        <p class="fs-5">
+        <p class="fs-6">
           {{this.game.startsAt}}
         </p>
       </div>
     </div>
     <div class="row">
-      <div class="col-3">
-        <h3 class="fs-4">
+      <div class="col-4">
+        <h3 class="fs-6 fw-bold">
           Ends at:
         </h3>
       </div>
       <div class="col">
-        <p class="fs-5">
+        <p class="fs-6">
           {{this.game.endsAt}}
         </p>
       </div>
     </div>
     <hr />
-    <h3 class="fs-4">
+    <h3 class="fs-6 fw-bold">
       Players:
     </h3>
     {{#each this.users}}
       <div class="card mb-3">
         <div class="card-body">
-          <h4 class="card-title fs-5">
+          <h4 class="card-title fs-6">
             @{{this.username}}
           </h4>
         </div>

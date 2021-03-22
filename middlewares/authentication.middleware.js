@@ -1,34 +1,25 @@
 const jwt = require('jsonwebtoken');
 
 const authenticate = (req, res, next) => {
-  if (
-    typeof req.cookies.nToken === 'undefined' ||
-    req.cookies.nToken === null
-  ) {
-    const error = new Error('Not authenticated.');
-    req.userId = null;
-    next(error)
-  } else {
-    const token = req.cookies.nToken;
-    let decodedToken;
+  if (typeof req.cookies.nToken === 'undefined' || req.cookies.nToken === null)
+    return res.redirect('/auth/login');
 
-    try {
-      decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-    } catch(err) {
-      err.statusCode = 500;
-      throw err;
-    }
+  const token = req.cookies.nToken;
+  let decodedToken;
 
-    if (!decodedToken) {
-      const error = new Error('Not authenticated.');
-      error.statusCode = 401;
-      throw error;
-    }
-
-    req.userId = decodedToken.userId;
-    req.username = decodedToken.username;
-    next();
+  try {
+    decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+  } catch (err) {
+    return res.redirect('/auth/login');
   }
+
+  if (!decodedToken) {
+    return res.redirect('/auth/login');
+  }
+
+  req.userId = decodedToken.userId;
+  req.username = decodedToken.username;
+  next();
 };
 
 module.exports = authenticate;

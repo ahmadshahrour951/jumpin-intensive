@@ -4,33 +4,44 @@
       <h1 class="card-title">
         Login
       </h1>
-      <hr>
+      <hr />
       <form action="login" method="post">
         <div class="form-group">
-          <label for="username">
-            Username
-          </label>
-          <input
-            type="text"
-            name="username"
-            class="form-control mb-2"
-            id="username"
-            placeholder="Username"
-          />
-          <label for="password">
-            Password
-          </label>
-          <input
-            type="password"
-            name="password"
-            class="form-control mb-2"
-            id="password"
-            placeholder="Password"
-          />
+          <div class="form-floating mb-3">
+            <input
+              type="text"
+              name="username"
+              class="form-control"
+              id="username"
+              placeholder="username"
+            />
+            <label for="username">
+              Username
+            </label>
+          </div>
+          <div class="form-floating mb-3">
+            <input
+              type="password"
+              name="password"
+              class="form-control"
+              id="password"
+              placeholder="Password"
+            />
+            <label for="password">
+              Password
+            </label>
+          </div>
         </div>
         <button type="submit" class="btn btn-primary">
           Login
         </button>
+        {{#if this.errors.length}}
+          {{#each this.errors}}
+            <div class="alert alert-danger mt-3">
+              {{this.param}}: {{this.msg}}
+            </div>
+          {{/each}}
+        {{/if}}
       </form>
     </div>
   </div>

@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+$theme-colors: (
+  (
+    primary: #ffc107,
+    secondary: #d39e00,
+  )
+);
+
+$font-family-sans-serif: 'Montserrat', -apple-system, system-ui,
+  BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !default;
+$font-family-serif: Georgia, 'Times New Roman', Times, serif !default;
+$font-family-monospace: Menlo, Monaco, Consolas, 'Liberation Mono',
+  'Courier New', monospace !default;
+$font-family-base: $font-family-sans-serif !default;
+
+@import '../node_modules/bootstrap/scss/bootstrap';

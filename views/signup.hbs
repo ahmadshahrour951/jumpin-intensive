@@ -4,45 +4,58 @@
       <h1 class="card-title">
         Sign Up
       </h1>
-      <hr>
+      <hr />
       <form action="/auth/signup" method="post">
         <div class="form-group">
-          <label for="email">
-            Email
-          </label>
-          <input
-            type="email"
-            name="email"
-            class="form-control mb-2"
-            id="email"
-            placeholder="Email"
-          />
-          <label for="username">
-            Username
-          </label>
-          <input
-            type="text"
-            name="username"
-            class="form-control mb-2"
-            id="username"
-            placeholder="Username"
-          />
-          <label for="password">
-            Password
-          </label>
-          <input
-            type="password"
-            name="password"
-            class="form-control mb-2"
-            id="password"
-            placeholder="Password"
-          />
+          <div class="form-floating mb-3">
+            <input
+              type="email"
+              name="email"
+              class="form-control"
+              id="email"
+              placeholder="Email"
+            />
+            <label for="email">
+              Email
+            </label>
+          </div>
+          <div class="form-floating mb-3">
+            <input
+              type="text"
+              name="username"
+              class="form-control"
+              id="username"
+              placeholder="Username"
+            />
+            <label for="username">
+              Username
+            </label>
+          </div>
+          <div class="form-floating mb-3">
+            <input
+              type="password"
+              name="password"
+              class="form-control"
+              id="password"
+              placeholder="Password"
+            />
+            <label for="password">
+              Password
+            </label>
+          </div>
         </div>
         <div class="text-right">
           <button type="submit" class="btn btn-primary">
             Signup
           </button>
         </div>
+        {{#if this.errors.length}}
+          {{#each this.errors}}
+            <div class="alert alert-danger mt-3">
+              {{this.param}}: {{this.msg}}
+            </div>
+          {{/each}}
+        {{/if}}
       </form>
     </div>
   </div>

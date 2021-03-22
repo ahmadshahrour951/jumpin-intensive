@@ -6,16 +6,19 @@
           @{{this.user.username}}
         </h1>
         <div class="form-group mb-2">
-          <label for="name">
-            Name
-          </label>
-          <input
-            type="text"
-            name="name"
-            class="form-control"
-            id="name"
-            value="{{this.user.name}}"
-          />
+          <div class="form-floating mb-3">
+            <input
+              type="text"
+              name="name"
+              class="form-control"
+              id="name"
+              value="{{this.user.name}}"
+              placeholder="Name"
+            />
+            <label for="name">
+              Name
+            </label>
+          </div>
         </div>
         <div class="text-right">
           <button type="submit" class="btn btn-primary">

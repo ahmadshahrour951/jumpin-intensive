@@ -3,6 +3,8 @@ const express = require('express');
 const exphbs = require('express-handlebars');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
+const path = require('path');
+const sassMiddleware = require('node-sass-middleware');
 
 const db = require('./models');
 const routes = require('./routes');
@@ -36,7 +38,20 @@ app.engine(
 app.set('view engine', 'hbs');
 
 app.use(cookieParser());
+app.use(
+  sassMiddleware({
+    src: path.join(__dirname, 'bootstrap'),
+    dest: path.join(__dirname, 'public'),
+    indentedSyntax: false, // true = .sass and false = .scss
+    sourceMap: true,
+  })
+);
 app.use(express.static('public'));
+app.use(
+  '/bootstrap',
+  express.static(path.join(__dirname + '/node_modules/bootstrap/dist'))
+);
+
 app.use(morgan('combined'));
 app.use(express.json());
 app.use(

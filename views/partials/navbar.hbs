@@ -1,21 +1,42 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-primary">
   <div class="container">
     <a class="navbar-brand" href="/games">
       Jumpin
     </a>
     <div class="navbar-right">
       {{#if this.user}}
-        <a href="/users/{{this.user.username}}/edit" class="btn btn-primary">
-          Profile
+        <a
+          href="/users/{{this.user.username}}/edit"
+          class="btn btn-outline-light"
+        >
+          <span>
+            {{fontawesome-icon icon="user-circle"}}
+          </span>
+          <span>
+            Profile
+          </span>
         </a>
-        <a href="/auth/logout" class="btn btn-primary">
-          Logout
+        <a href="/auth/logout" class="btn btn-outline-light">
+          <span>
+            {{fontawesome-icon icon="sign-out-alt"}}
+          </span>
+          <span>
+            Logout
+          </span>
         </a>
       {{else}}
-        <a href="/auth/login" class="btn btn-primary">
-          Login
+        <a href="/auth/login" class="btn btn-outline-light">
+          <span>
+            {{fontawesome-icon icon="sign-in-alt"}}
+          </span>
+          <span>
+            Login
+          </span>
         </a>
-        <a href="/auth/signup" class="btn btn-primary">
+        <a href="/auth/signup" class="btn btn-outline-light">
+          <span>
+            {{fontawesome-icon icon="user-plus"}}
+          </span>
           Signup
         </a>
       {{/if}}

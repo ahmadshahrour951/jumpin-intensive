@@ -1,5 +1,8 @@
+const { body } = require('express-validator');
+
 const db = require('../models');
 const userController = {
+  validate,
   // findUsers,
   // findUser,
   updateUser,
@@ -19,6 +22,16 @@ const userController = {
 //       return res.render('user-detail', { user });
 //     });
 // }
+
+function validate(method) {
+  switch (method) {
+    case 'updateUser': {
+      return [
+        body('name').optional().isString().trim()
+      ];
+    }
+  }
+}
 
 function updateUser(req, res, next) {
   if (req.method === 'GET') {
