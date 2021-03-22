@@ -15,16 +15,17 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         allowNull: true,
       },
-      starts_at: {
+      startsAt: {
         type: DataTypes.DATE,
         allowNull: false,
       },
-      ends_at: {
+      endsAt: {
         type: DataTypes.DATE,
         allowNull: false,
       },
     },
     {
+      timestamps: true,
       underscored: true,
     }
   );

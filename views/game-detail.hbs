@@ -1,69 +1,80 @@
-<div class="card w-50 mx-auto mt-5">
+<div class="card shadow w-50 mx-auto mt-5">
   <div class="card-body">
-    <h3 class="card-title">
-      Game Detail
+    <h1 class="card-title d-flex justify-content-between">
+      <span>
+        {{this.game.name}}
+      </span>
+      <span>
+        {{fontawesome-icon icon="futbol"}}
+      </span>
+    </h1>
+    <h2 class="card-subtitle text-muted fs-4">
+      {{this.game.description}}
+    </h2>
+    <hr />
+    <div class="row">
+      <div class="col-3">
+        <h3 class="fs-4">
+          Created by:
+        </h3>
+      </div>
+      <div class="col">
+        <p class="fs-5">
+          @{{this.game.user.username}}
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-3">
+        <h3 class="fs-4">
+          Starts at:
+        </h3>
+      </div>
+      <div class="col">
+        <p class="fs-5">
+          {{this.game.startsAt}}
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-3">
+        <h3 class="fs-4">
+          Ends at:
+        </h3>
+      </div>
+      <div class="col">
+        <p class="fs-5">
+          {{this.game.endsAt}}
+        </p>
+      </div>
+    </div>
+    <hr />
+    <h3 class="fs-4">
+      Players:
     </h3>
-    <form method="post" action="/{{game.id}}">
-      <input type="hidden" name="method" value="PUT" />
-      <div class="mb-3">
-        <label for="name" class="form-label">
-          Name
-        </label>
-        <input
-          class="form-control"
-          id="name"
-          name="name"
-          type="text"
-          value="{{game.name}}"
-        />
+    {{#each this.users}}
+      <div class="card mb-3">
+        <div class="card-body">
+          <h4 class="card-title fs-5">
+            @{{this.username}}
+          </h4>
+        </div>
       </div>
-      <div class="mb-3">
-        <label for="description" class="form-label">
-          Description
-        </label>
-        <textarea
-          class="form-control"
-          id="description"
-          name="description"
-          rows="4"
-        >{{game.description}}
-        </textarea>
-      </div>
-      <div class="mb-3">
-        <label for="starts_at" class="form-label">
-          Starts at
-        </label>
-        <input
-          class="form-control"
-          id="starts_at"
-          name="starts_at"
-          type="datetime-local"
-          value="{{game.starts_at}}"
-        />
-      </div>
-      <div class="mb-3">
-        <label for="ends_at" class="form-label">
-          Ends at
-        </label>
-        <input
-          class="form-control"
-          id="ends_at"
-          name="ends_at"
-          type="datetime-local"
-          value="{{game.ends_at}}"
-        />
-      </div>
-      <button
-        id="delete-game"
-        value="{{game.id}}"
-        type="button"
-        class="btn btn-danger"
-      >
-        Delete
-      </button>
-      <button type="submit" class="btn btn-primary">
-        Update
-      </button>
-    </form>
+    {{/each}}
+    {{#unless isCreator}}
+      {{#if isJoined}}
+        <a href="/games/{{this.game.id}}/remove" class="btn btn-danger">
+          Leave Game
+        </a>
+      {{else}}
+        <a href="/games/{{this.game.id}}/join" class="btn btn-primary">
+          Join Game
+        </a>
+      {{/if}}
+    {{else}}
+      <a href="/games/{{this.game.id}}/edit" class="btn btn-primary">
+        Edit Game
+      </a>
+    {{/unless}}
   </div>
 </div>
