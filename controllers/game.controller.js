@@ -6,44 +6,139 @@ const gameController = {
   findGame,
   updateGame,
   deleteGame,
+  joinSelfGame,
+  removeSelfGame,
 };
 
 function createGame(req, res, next) {
-  if (req.method === 'GET') return res.render('game-create');
+  if (req.method === 'GET') {
+    return db.users
+      .findByPk(req.userId)
+      .then((user) => {
+        return res.render('game-create', {
+          user: JSON.parse(JSON.stringify(user)),
+        });
+      })
+      .catch((err) => console.log(err));
+  }
 
   let newGame = req.body;
+  let gameOwner;
 
-  newGame.starts_at = new Date(newGame.starts_at).toISOString();
-  newGame.ends_at = new Date(newGame.ends_at).toISOString();
+  newGame.startsAt = new Date(newGame.startsAt).toISOString();
+  newGame.endsAt = new Date(newGame.endsAt).toISOString();
 
   db.users
     .findByPk(req.userId)
     .then((user) => {
+      gameOwner = user;
       return user.createGame(newGame);
+    })
+    .then((game) => {
+      return game.addUser(gameOwner);
     })
     .then(() => res.redirect('/games'))
     .catch((err) => console.log(err));
 }
 
 function findGames(req, res, next) {
+  let gamesJson;
   db.games
-    .findAll({ raw: true })
+    .findAll({
+      attributes: ['id', 'name', 'startsAt'],
+      include: {
+        model: db.users,
+        attributes: ['id', 'username'],
+      },
+    })
     .then((games) => {
-      return res.render('games-index', { games });
+      gamesJson = JSON.parse(JSON.stringify(games));
+      gamesJson.map((x) => {
+        x.startsAt = moment(x.startsAt).format(
+          'dddd, MMM Do, YYYY [at] hh:mm A'
+        );
+        return x;
+      });
+
+      return db.users.findByPk(req.userId);
+    })
+    .then((user) => {
+      const userJson = JSON.parse(JSON.stringify(user));
+      return res.render('games-index', {
+        games: gamesJson,
+        user: userJson,
+      });
     })
     .catch((err) => console.log(err));
 }
 
 function findGame(req, res, next) {
-  db.games.findByPk(req.params.gameId, { raw: true }).then((game) => {
-    game.starts_at = moment(game.starts_at).format('YYYY-MM-DDThh:mm');
-    game.ends_at = moment(game.ends_at).format('YYYY-MM-DDThh:mm');
-    return res.render('game-detail', { game });
-  });
+  let currentGame;
+  let currentUser;
+
+  db.users
+    .findByPk(req.userId)
+    .then((user) => {
+      currentUser = JSON.parse(JSON.stringify(user));
+      return db.games.findByPk(req.params.gameId, {
+        include: {
+          model: db.users,
+          attributes: ['id', 'username'],
+        },
+      });
+    })
+    .then((game) => {
+      currentGame = JSON.parse(JSON.stringify(game));
+      currentGame.startsAt = moment(currentGame.startsAt).format(
+        'dddd, MMM Do, YYYY [at] hh:mm A'
+      );
+      currentGame.endsAt = moment(currentGame.endsAt).format(
+        'dddd, MMM Do, YYYY [at] hh:mm A'
+      );
+
+      return game.getUsers();
+    })
+    .then((users) => {
+      const isCreator = currentGame.userId === req.userId;
+      const isJoined = users.map((x) => x.id).includes(req.userId);
+
+      return res.render('game-detail', {
+        game: currentGame,
+        user: currentUser,
+        users: JSON.parse(JSON.stringify(users)),
+        isJoined,
+        isCreator,
+      });
+    })
+    .catch((err) => console.log(err));
 }
 
 function updateGame(req, res, next) {
-  db.games
+  if (req.method === 'GET') {
+    let currentUser;
+
+    return db.users
+      .findByPk(req.userId)
+      .then((user) => {
+        currentUser = JSON.parse(JSON.stringify(user));
+        return db.games.findByPk(req.params.gameId);
+      })
+      .then((game) => {
+        const gameJson = JSON.parse(JSON.stringify(game));
+        gameJson.startsAt = moment(gameJson.startsAt).format(
+          'YYYY-MM-DDThh:mm'
+        );
+        gameJson.endsAt = moment(gameJson.endsAt).format('YYYY-MM-DDThh:mm');
+
+        return res.render('game-edit', {
+          game: gameJson,
+          user: currentUser,
+        });
+      })
+      .catch((err) => console.log(err));
+  }
+
+  return db.games
     .findByPk(req.params.gameId)
     .then((game) => {
       return game.update(req.body);
@@ -67,6 +162,42 @@ function deleteGame(req, res, next) {
         },
       });
     });
+}
+
+function joinSelfGame(req, res, next) {
+  let currentUser;
+
+  db.users
+    .findByPk(req.userId)
+    .then((user) => {
+      currentUser = user;
+      return db.games.findByPk(req.params.gameId);
+    })
+    .then((game) => {
+      return game.addUser(currentUser);
+    })
+    .then(() => {
+      return res.redirect(`/games/${req.params.gameId}`);
+    })
+    .catch((err) => console.log(err));
+}
+
+function removeSelfGame(req, res, next) {
+  let currentUser;
+
+  db.users
+    .findByPk(req.userId)
+    .then((user) => {
+      currentUser = user;
+      return db.games.findByPk(req.params.gameId);
+    })
+    .then((game) => {
+      return game.removeUser(currentUser);
+    })
+    .then(() => {
+      return res.redirect(`/games/${req.params.gameId}`);
+    })
+    .catch((err) => console.log(err));
 }
 
 module.exports = gameController;
