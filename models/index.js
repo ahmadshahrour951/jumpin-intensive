@@ -6,8 +6,12 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   dialect: dbConfig.dialect,
   operatorsAliases: 0,
   logging: false,
+  ssl: true,
   dialectOptions: {
-    ssl: true,
+    ssl: {
+      require: true, 
+      rejectUnauthorized: false, 
+    },
   },
   pool: {
     max: dbConfig.pool.max,
