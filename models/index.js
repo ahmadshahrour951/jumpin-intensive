@@ -1,25 +1,15 @@
-const dbConfig = require('../config/db.config.js');
+const dbConfig =
+  process.env.NODE_ENV === 'production'
+    ? require('../config/db.config.js').production
+    : require('../config/db.config.js').development;
 
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
-  host: dbConfig.HOST,
-  dialect: dbConfig.dialect,
-  operatorsAliases: 0,
-  logging: false,
-  // ssl: true,
-  // dialectOptions: {
-  //   ssl: {
-  //     require: true, 
-  //     rejectUnauthorized: false, 
-  //   },
-  // },
-  pool: {
-    max: dbConfig.pool.max,
-    min: dbConfig.pool.min,
-    acquire: dbConfig.pool.acquire,
-    idle: dbConfig.pool.idle,
-  },
-});
+const sequelize = new Sequelize(
+  dbConfig.db,
+  dbConfig.user,
+  dbConfig.password,
+  dbConfig.options
+);
 
 /////////////////////////////////////////////////////////////////////////////////////////
 // Models Object

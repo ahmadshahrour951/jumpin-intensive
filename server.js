@@ -46,8 +46,6 @@ app.use(
   sassMiddleware({
     src: path.join(__dirname, 'bootstrap'),
     dest: path.join(__dirname, 'public'),
-    // force: true,
-    debug: true,
     indentedSyntax: false, // true = .sass and false = .scss
     sourceMap: true,
     outputStyle: 'compressed',
@@ -66,7 +64,7 @@ app.use('/', routes);
 const PORT = process.env.PORT || 8000;
 
 db.sequelize
-  .sync({ force: true })
+  .sync({ force: !(process.env.NODE_ENV === 'production') })
   .then(() => {
     app.listen(PORT, console.log(`Server started on port ${PORT}`));
   })
