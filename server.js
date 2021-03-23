@@ -39,19 +39,21 @@ app.set('view engine', 'hbs');
 
 app.use(cookieParser());
 app.use(
+  '/bootstrap',
+  express.static(path.join(__dirname, '/node_modules/bootstrap/dist'))
+);
+app.use(
   sassMiddleware({
     src: path.join(__dirname, 'bootstrap'),
     dest: path.join(__dirname, 'public'),
+    // force: true,
+    debug: true,
     indentedSyntax: false, // true = .sass and false = .scss
     sourceMap: true,
+    outputStyle: 'compressed',
   })
 );
-app.use(express.static('public'));
-app.use(
-  '/bootstrap',
-  express.static(path.join(__dirname + '/node_modules/bootstrap/dist'))
-);
-
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(morgan('combined'));
 app.use(express.json());
 app.use(
