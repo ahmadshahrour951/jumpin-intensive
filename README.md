@@ -20,10 +20,10 @@ The project has the following directory structure:
 ```
       ├── bootstrap                       # Manually customize Bootstrap via style.scss
       ├── controllers                     # Route logic is handled
-      ├── middlewares                  # Runs before controllers if used
+      ├── middlewares                     # Runs before controllers if used
       ├── models                          # The schema and Sequelize setup for db connection
-      ├── routes                            # Registration of routes
-      └── views                            # The actual HTML the user sees, with Handlebars logic
+      ├── routes                          # Registration of routes
+      └── views                           # The actual HTML the user sees, with Handlebars logic
 ```
 
 Controllers, middlewares, and routes could have been jubbled up together, but who would want spaghetti code right?
@@ -37,27 +37,27 @@ Within each of the main directories, you'll files named after three topics: Game
                     └── game.controller.js
                     └── user.controller.js
       ├── middlewares                  
-                    └── authentication.middleware.js     # Are you allowed to access resources
-                    └── authorization.middleware.js       # Are you allowed to edit resources
+                    └── authentication.middleware.js                       # Are you allowed to access resources
+                    └── authorization.middleware.js                       # Are you allowed to edit resources
       ├── models                          
                     └── game.model.js
                     └── user.model.js
-                    └── index.js                            # Sequelize configuration to manage models and relations
+                    └── index.js                       # Sequelize configuration to manage models and relations
       ├── routes                            
                     └── auth.route.js
                     └── game.route.js
                     └── user.route.js                     
-                    └── index.js                            # Register all routes with different prefixes
+                    └── index.js                       # Register all routes with different prefixes
       └── views                            
-                    └── signup.hbs                        # Signup form page
-                    └── login.hbs                          # Login form page
-                    └── user-edit.hbs                    # Profile Page
-                    └── games-index.hbs              # Home Page (which displays the games)
-                    └── game-create.hbs               # Create game Page (After you press the + button from Home Page)
-                    └── game-detail.hbs               # Detail Page for a game after card click from Home Page)
-                    └── game-edit.hbs                  # Update the game, only by the creator
-                    └── error-404.hbs                   # When the user entered an invalid route
-                    └── error.hbs                          # Handles any other errors in the code
+                    └── signup.hbs                       # Signup form page
+                    └── login.hbs                       # Login form page
+                    └── user-edit.hbs                       # Profile Page
+                    └── games-index.hbs                       # Home Page (which displays the games)
+                    └── game-create.hbs                       # Create game Page (After you press the + button from Home Page)
+                    └── game-detail.hbs                       # Detail Page for a game after card click from Home Page)
+                    └── game-edit.hbs                       # Update the game, only by the creator
+                    └── error-404.hbs                       # When the user entered an invalid route
+                    └── error.hbs                       # Handles any other errors in the code
 ``` 
 
 The directories are divided by User, Game, and Auth is because each resource requires different level of santization and logic. For example, when authenticating a user, it has nothing to do with game logic (creation, etc.) EXCEPT for the token provided. The token is the only valuable thing to extract from authentication, this is so we can know WHO is entering our website. Let's discuss the models we created and their relationships
@@ -86,14 +86,14 @@ And there have two relationships:
 ## Roadmap
 - **Error Handling** - Enhance sanitization, user side errors, server side errors and unforseen errors. These are crutial to get right to improve user experience. 
 - **Session Authentication** - JWT is a great and easy way to manage authentication, however, no matter how hard you try, all authentication eventually is stateful. The reason being is that when you provide a token that has an expiry time, it is impossible to invalidate it if it were to be misused by a threat without the developer manually changing server secrets. This is not scalable or ideal. Therefore, it is required to "refresh" those tokens and save a list of rejected tokens in the database. Then comes the question if JWT is even worth using anymore as opposed to regular cookie sessions... let's see!
-- Passport Signup - This is just so that there is less friction for signup and that platforms with social stands can help the user easily share games and signup via those platforms. 
-- Landing page - This is to introduce the app to new comers and provide a professional experience.
-- Documentation - for both internal and external is important. Internal is so that when we start onboarding or explaining the app, it becomes simple and exhaustive amounts of info. The app will follow the BDD dev cycle. Document, test, then code!
-- Tests - including unit, integration, and end-to-end tests. This includes and not limited to every part of the MVC architecture, from A - Z...
-- Admin portal - to manage games and users if there are unforseen complications via the user's side. This portal also provide a safe zone for employees to extract/input data to improve the business side of the app.
-- Vendor portal - to enable vendors to manage and provide available slots for games. This will create more structure and it will provide a direct relationship with the platform. 
-- RESTful & SPA Architecture - to seperate even futher concerns of frontend and backend logic, and enhances the user experience by provided an app like feel in the website.
-- Mobile Application - Via native language or by using a SPA sibling like React Native which compiles non native to native.
+- **Passport Signup** - This is just so that there is less friction for signup and that platforms with social stands can help the user easily share games and signup via those platforms. 
+- **Landing page** - This is to introduce the app to new comers and provide a professional experience.
+- **Documentation** - for both internal and external is important. Internal is so that when we start onboarding or explaining the app, it becomes simple and exhaustive amounts of info. The app will follow the BDD dev cycle. Document, test, then code! The external part is to instigate procedures for 3rd party access, which can be users or in the far future for 3rd party revenue avenues.
+- **Tests** - including unit, integration, and end-to-end tests. This includes and not limited to every part of the MVC architecture, from A - Z...
+- **Admin portal** - to manage games and users if there are unforseen complications via the user's side. This portal also provide a safe zone for employees to extract/input data to improve the business side of the app.
+- **Vendor portal** - to enable vendors to manage and provide available slots for games. This will create more structure and it will provide a direct relationship with the platform. 
+- **RESTful & SPA Architecture** - to seperate even futher concerns of frontend and backend logic, and enhances the user experience by provided an app like feel in the website.
+- **Mobile Application** - Via native language or by using a SPA sibling like React Native which compiles non native to native.
 and so on...
 
 ## Contact
