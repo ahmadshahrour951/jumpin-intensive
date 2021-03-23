@@ -7,6 +7,10 @@ const authRoutes = require('./auth.route')
 const userRoutes = require('./user.route');
 const gameRoutes = require('./game.route');
 
+router.get('/', (req, res, next) => {
+  return res.redirect('/games')
+})
+
 router.use('/auth', authRoutes)
 router.use('/users', authentication, userRoutes);
 router.use('/games', authentication, gameRoutes);
