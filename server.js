@@ -9,22 +9,7 @@ const sassMiddleware = require('node-sass-middleware');
 const db = require('./models');
 const routes = require('./routes');
 
-const Handlebars = require('handlebars');
-const { library, dom, icon } = require('@fortawesome/fontawesome-svg-core');
-const fas = require('@fortawesome/free-solid-svg-icons').fas;
-const fab = require('@fortawesome/free-brands-svg-icons').fab;
-
-library.add(fas);
-library.add(fab);
-
-Handlebars.registerHelper('fontawesome-css', function () {
-  return new Handlebars.SafeString(dom.css());
-});
-Handlebars.registerHelper('fontawesome-icon', function (args) {
-  return new Handlebars.SafeString(
-    icon({ prefix: 'fas', iconName: args.hash.icon }).html
-  );
-});
+const PORT = process.env.PORT || 8000;
 
 const app = express();
 
@@ -33,11 +18,10 @@ app.engine(
   exphbs({
     defaultLayout: 'main',
     extname: '.hbs',
+    helpers: require('./helpers/hbs.helper')
   })
 );
 app.set('view engine', 'hbs');
-
-app.use(cookieParser());
 app.use(
   '/bootstrap',
   express.static(path.join(__dirname, '/node_modules/bootstrap/dist'))
@@ -52,16 +36,18 @@ app.use(
   })
 );
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(morgan('combined'));
+
+app.use(cookieParser());
 app.use(express.json());
 app.use(
   express.urlencoded({
     extended: true,
   })
 );
-app.use('/', routes);
 
-const PORT = process.env.PORT || 8000;
+app.use(morgan('combined'));
+
+app.use('/', routes);
 
 db.sequelize
   .sync({ force: !(process.env.NODE_ENV === 'production') })
