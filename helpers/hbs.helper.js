@@ -6,6 +6,9 @@ const fas = require('@fortawesome/free-solid-svg-icons').fas;
 library.add(fas);
 // library.add(fab);
 
+////////////////////////////////////////////////////////////////////////////////////////
+// Register helper functions for Handlebars in root file
+/////////////////////////////////////////////////////////////////////////////////////////
 module.exports = {
   'fontawesome-css': function () {
     return new Handlebars.SafeString(dom.css());

@@ -90,11 +90,11 @@ And there have two relationships:
 - **Landing page** - This is to introduce the app to new comers and provide a professional experience.
 - **Documentation** - for both internal and external is important. Internal is so that when we start onboarding or explaining the app, it becomes simple and exhaustive amounts of info. The app will follow the BDD dev cycle. Document, test, then code! The external part is to instigate procedures for 3rd party access, which can be users or in the far future for 3rd party revenue avenues.
 - **Tests** - including unit, integration, and end-to-end tests. This includes and not limited to every part of the MVC architecture, from A - Z...
+- **Socialize Users** - Allow users to see profile pages, add each other as friends, and possibly create game chat like how they already do it via whatsapp.
 - **Admin portal** - to manage games and users if there are unforseen complications via the user's side. This portal also provide a safe zone for employees to extract/input data to improve the business side of the app.
 - **Vendor portal** - to enable vendors to manage and provide available slots for games. This will create more structure and it will provide a direct relationship with the platform. 
 - **RESTful & SPA Architecture** - to seperate even futher concerns of frontend and backend logic, and enhances the user experience by provided an app like feel in the website.
 - **Mobile Application** - Via native language or by using a SPA sibling like React Native which compiles non native to native.
-and so on...
 
 ## Contact
 If you like the idea or just want to have chat, private message me on github or open a discussion on this repo!

@@ -1,3 +1,6 @@
+////////////////////////////////////////////////////////////////////////////////////////
+// User model definition
+/////////////////////////////////////////////////////////////////////////////////////////
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
     'user',
@@ -31,7 +34,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       timestamps: true,
-      underscored: true
+      underscored: true,
     }
   );
 

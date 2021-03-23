@@ -3,26 +3,15 @@ const { body } = require('express-validator');
 const db = require('../models');
 const userController = {
   validate,
+  updateUser,
   // findUsers,
   // findUser,
-  updateUser,
   // findJoinedGames,
 };
 
-// function findUsers(req, res, next) {
-//   db.users.findAll({ raw: true }).then((users) => {
-//     return res.render('users-index', { users });
-//   });
-// }
-
-// function findUser(req, res, next) {
-//   db.users
-//     .findOne({ where: { username: req.params.username } })
-//     .then((user) => {
-//       return res.render('user-detail', { user });
-//     });
-// }
-
+////////////////////////////////////////////////////////////////////////////////////////
+// Validate middleware for form santization
+/////////////////////////////////////////////////////////////////////////////////////////
 function validate(method) {
   switch (method) {
     case 'updateUser': {
@@ -33,6 +22,9 @@ function validate(method) {
   }
 }
 
+////////////////////////////////////////////////////////////////////////////////////////
+// Get & Post controller handler to update user details via Profile Page
+/////////////////////////////////////////////////////////////////////////////////////////
 function updateUser(req, res, next) {
   if (req.method === 'GET') {
     return db.users
@@ -55,6 +47,20 @@ function updateUser(req, res, next) {
     })
     .catch((err) => console.log(err));
 }
+
+// function findUsers(req, res, next) {
+//   db.users.findAll({ raw: true }).then((users) => {
+//     return res.render('users-index', { users });
+//   });
+// }
+
+// function findUser(req, res, next) {
+//   db.users
+//     .findOne({ where: { username: req.params.username } })
+//     .then((user) => {
+//       return res.render('user-detail', { user });
+//     });
+// }
 
 // function findJoinedGames(req, res, next) {
 //   db.users

@@ -1,3 +1,6 @@
+////////////////////////////////////////////////////////////////////////////////////////
+// Config options for database. One for production and one for dev. Without these you'll receive errors
+/////////////////////////////////////////////////////////////////////////////////////////
 module.exports = {
   development: {
     user: process.env.USER,
@@ -12,7 +15,7 @@ module.exports = {
         acquire: 30000,
         idle: 10000,
       },
-      logging: false
+      logging: false,
     },
   },
   production: {
@@ -35,7 +38,7 @@ module.exports = {
         acquire: 30000,
         idle: 10000,
       },
-      logging: false
+      logging: false,
     },
   },
 };

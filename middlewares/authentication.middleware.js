@@ -1,5 +1,8 @@
 const jwt = require('jsonwebtoken');
 
+////////////////////////////////////////////////////////////////////////////////////////
+// Authentication by verifying JWT token and passing payload to the rest of application
+/////////////////////////////////////////////////////////////////////////////////////////
 const authenticate = (req, res, next) => {
   if (typeof req.cookies.nToken === 'undefined' || req.cookies.nToken === null)
     return res.redirect('/auth/login');
