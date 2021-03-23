@@ -7,11 +7,11 @@ The objective of this intensive project is to bring the idea to life by building
 Enough chitchat, lets get to the code.
 
 ## The Tech Stack
-Backend Environment: **NodeJS v10.24.0**
-Relational Database: **PostgreSQL v13.2**
-ORM: **Sequelize v6.5.1**
-Template Engine: **HandlebarsJS v4.7.7**
-CSS Framework: **Bootstrap v5.0.0**
+- Backend Environment: **NodeJS v10.24.0**
+- Relational Database: **PostgreSQL v13.2**
+- ORM: **Sequelize v6.5.1**
+- Template Engine: **HandlebarsJS v4.7.7**
+- CSS Framework: **Bootstrap v5.0.0**
 
 ## The Architecture
 The project will use the **server-side render** technique to develop as many features as possible from the available scope within the time limits. An **MVC architecture** is used to seperate concerns of logic, storage, and ui.
