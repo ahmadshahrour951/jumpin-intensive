@@ -13,6 +13,16 @@ Enough chitchat, lets get to the code.
 - Template Engine: **HandlebarsJS v4.7.7**
 - CSS Framework: **Bootstrap v5.0.0**
 
+## Getting Started
+
+1. Install NodeJS, PostgreSQL, yarn, and psql globally on your local machine.
+2. Ensure psql is running smoothly by following this [article](https://www.robinwieruch.de/postgres-sql-macos-setup)/
+3. Create a database and record your credentials for later use/
+4. Run `yarn install` in the project root directory terminal to install the required packages.
+5. Run `yarn run dev` in the project root directory terminal and the project should be working fine.
+
+If you ran into any errors double check that your global installation in step 1 is correct along with the right versions. Usually its old configuration setups you might have in your machine that might cause a fuss.
+
 ## The Architecture
 The project will use the **server-side render** technique to develop as many features as possible from the available scope within the time limits. An **MVC architecture** is used to seperate concerns of logic, storage, and ui.
 ### Directory Structure
